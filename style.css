@@ -89,6 +89,7 @@ header h1 {
   width: 100%;
   border-radius: 12px;
   margin-bottom: 8px;
+  border-radius: 10px
 }
 
 .game-item span {
@@ -98,7 +99,7 @@ header h1 {
 }
 
 .game-item:hover {
-  transform: scale(1.05);
+  transform: scale(1.15);
 }
 
 
