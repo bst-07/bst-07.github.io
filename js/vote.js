@@ -32,7 +32,10 @@ function updateIconFill(){
 
   if(userVote === 'likes'){
     likeIcon.setAttribute('fill','currentColor');  
-    dislikeIcon.setAttribute('fill','none');       
+    dislikeIcon.setAttribute('fill','none');    
+        likeBtn.style.opacity = 0.2;
+    dislikeBtn.style.backgroundColor = 'transparent';
+    dislikeBtn.style.opacity = 1;
   } else if(userVote === 'dislikes'){
     dislikeIcon.setAttribute('fill','currentColor');
     likeIcon.setAttribute('fill','none');
