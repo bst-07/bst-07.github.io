@@ -10,62 +10,76 @@ const firebaseConfig = {
   measurementId: "G-5HM7TYMGD9"
 };
 
-
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
-const slug = document.querySelector('.game-container').dataset.slug;
 const likeBtn = document.getElementById('like-btn');
 const dislikeBtn = document.getElementById('dislike-btn');
 const likeCount = document.getElementById('like-count');
 const dislikeCount = document.getElementById('dislike-count');
 
-// LocalStorage: visitor vote tracker
-let userVotes = JSON.parse(localStorage.getItem('userVotes')) || {};
+const slug = document.querySelector('.game-container').dataset.slug;
 
-// 🔹 جلب count global من Firebase
+let userVotes = JSON.parse(localStorage.getItem('userVotes')) || {};
+let voteQueue = null;
+
+// Update icon fill based on visitor vote
+function updateIconFill(){
+  const userVote = userVotes[slug]; 
+  const likeIcon = document.querySelector('.like-icon');
+  const dislikeIcon = document.querySelector('.dislike-icon');
+
+  if(userVote === 'likes'){
+    likeIcon.setAttribute('fill','currentColor');  
+    dislikeIcon.setAttribute('fill','none');       
+  } else if(userVote === 'dislikes'){
+    dislikeIcon.setAttribute('fill','currentColor');
+    likeIcon.setAttribute('fill','none');
+  } else {
+    likeIcon.setAttribute('fill','none');
+    dislikeIcon.setAttribute('fill','none');
+  }
+}
+
+// Listen to global votes in real-time
 db.ref('votes/' + slug).on('value', snapshot => {
   const data = snapshot.val() || { likes: 0, dislikes: 0 };
   likeCount.textContent = data.likes;
   dislikeCount.textContent = data.dislikes;
-
-  // update UI buttons color
-  if(userVotes[slug] === 'likes'){
-    likeBtn.style.background = 'green';
-    dislikeBtn.style.background = '';
-  } else if(userVotes[slug] === 'dislikes'){
-    dislikeBtn.style.background = 'red';
-    likeBtn.style.background = '';
-  } else {
-    likeBtn.style.background = '';
-    dislikeBtn.style.background = '';
-  }
+  updateIconFill();
 });
 
-// 🔹 Function to send vote
-function sendVote(type){
-  const currentVote = userVotes[slug];
-
-  if(currentVote === type) return; // no change
+// Push vote to Firebase
+function pushVote(type){
+  const oldVote = userVotes[slug];
 
   db.ref('votes/' + slug).transaction(current => {
     if(!current) current = { likes: 0, dislikes: 0 };
 
-    // decrease old vote if exists
-    if(currentVote){
-      current[currentVote] = Math.max((current[currentVote] || 1) - 1, 0);
-    }
-
-    // increase new vote
+    if(oldVote) current[oldVote] = Math.max((current[oldVote] || 1) - 1, 0);
     current[type] = (current[type] || 0) + 1;
-    return current;
-  });
 
-  // save visitor vote in LocalStorage
-  userVotes[slug] = type;
-  localStorage.setItem('userVotes', JSON.stringify(userVotes));
+    return current;
+  }, (error, committed) => {
+    if(committed){
+      userVotes[slug] = type;
+      localStorage.setItem('userVotes', JSON.stringify(userVotes));
+      voteQueue = null;
+      updateIconFill();
+    } else if(error){
+      console.error(error);
+    }
+  });
 }
 
-// 🔹 Attach click events
-likeBtn.onclick = () => sendVote('likes');
-dislikeBtn.onclick = () => sendVote('dislikes');
+// Handle clicks with cache (debounce)
+function handleVote(type){
+  if(voteQueue === type) return;
+  voteQueue = type;
+  setTimeout(() => {
+    if(voteQueue) pushVote(voteQueue);
+  }, 300);
+}
+
+likeBtn.onclick = () => handleVote('likes');
+dislikeBtn.onclick = () => handleVote('dislikes');
