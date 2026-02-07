@@ -1,41 +1,48 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const likeBtn = document.getElementById('like-btn');
-  const dislikeBtn = document.getElementById('dislike-btn');
-  const likeCount = document.getElementById('like-count');
-  const dislikeCount = document.getElementById('dislike-count');
+  const gameContainers = document.querySelectorAll('.game-container');
 
-  const gameContainer = document.querySelector('.game-container');
-  const slug = gameContainer.dataset.slug;
-  const API = "https://funzilo.com/wp-json/votes/v1";
+  // Load votes and user votes
+  const votes = JSON.parse(localStorage.getItem('votes')) || {};
+  const userVotes = JSON.parse(localStorage.getItem('userVotes')) || {};
 
-  // جلب votes
-  function loadVotes() {
-    fetch(`${API}/get?slug=${slug}`)
-      .then(res => res.json())
-      .then(data => {
-        likeCount.textContent = data.likes ?? 0;
-        dislikeCount.textContent = data.dislikes ?? 0;
-      })
-      .catch(err => console.error("Error loading votes:", err));
-  }
+  gameContainers.forEach(container => {
+    const slug = container.dataset.slug;
+    const likeBtn = container.querySelector('.like-btn');
+    const dislikeBtn = container.querySelector('.dislike-btn');
+    const likeCount = container.querySelector('.like-count');
+    const dislikeCount = container.querySelector('.dislike-count');
 
-  // إرسال vote
-  function sendVote(type) {
-    fetch(`${API}/update`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ slug, type })
-    })
-    .then(res => res.json())
-    .then(data => {
-      likeCount.textContent = data.likes ?? 0;
-      dislikeCount.textContent = data.dislikes ?? 0;
-    })
-    .catch(err => console.error("Error sending vote:", err));
-  }
+    // Initialize votes if missing
+    if (!votes[slug]) votes[slug] = { likes: 0, dislikes: 0 };
 
-  likeBtn.onclick = () => sendVote('likes');
-  dislikeBtn.onclick = () => sendVote('dislikes');
+    // Display initial counts
+    likeCount.textContent = votes[slug].likes;
+    dislikeCount.textContent = votes[slug].dislikes;
 
-  loadVotes();
+    function updateVote(newVote) {
+      const oldVote = userVotes[slug];
+
+      if (oldVote === newVote) return; // no change
+
+      // Decrease old vote if exists
+      if (oldVote) votes[slug][oldVote]--;
+
+      // Increase new vote
+      votes[slug][newVote]++;
+
+      // Save new vote
+      userVotes[slug] = newVote;
+
+      // Update localStorage
+      localStorage.setItem('votes', JSON.stringify(votes));
+      localStorage.setItem('userVotes', JSON.stringify(userVotes));
+
+      // Update UI
+      likeCount.textContent = votes[slug].likes;
+      dislikeCount.textContent = votes[slug].dislikes;
+    }
+
+    likeBtn.addEventListener('click', () => updateVote('likes'));
+    dislikeBtn.addEventListener('click', () => updateVote('dislikes'));
+  });
 });
