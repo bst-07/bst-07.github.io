@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Magikmon - Browser Game</title>
+<meta name="description" content="Play Magikmon, the ultimate browser-based monster-collecting RPG. Explore, battle, and master the magic world of Ogwarts.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/gamez.css">
+<link rel="stylesheet" href="/css/style.css">
+
+</head>
+<body>
+
+<header></header>
+
+<div class="grid-overlay"></div>
+<div class="container">
+  <h1 id="play">Play Magikmon</h1>
+
+  <!-- Vote system -->
+ 
+
+  <div class="game-container" data-slug="tennis-masters">
+    <!-- Optional iframe for game -->
+    <!-- <iframe src="https://tunnelrush.app/iframe/index.html" allowfullscreen loading="lazy"></iframe> -->
+      <div class="vote-buttons">
+      <button id="like-btn">
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="26" width="26" xmlns="http://www.w3.org/2000/svg"><path d="M198 448h172c15.7 0 28.6-9.6 34.2-23.4l57.1-135.4c1.7-4.4 2.6-9 2.6-14v-38.6c0-21.1-17-44.6-37.8-44.6H306.9l18-81.5.6-6c0-7.9-3.2-15.1-8.3-20.3L297 64 171 191.3c-6.8 6.9-11 16.5-11 27.1v192c0 21.1 17.2 37.6 38 37.6zM48 224h64v224H48z"></path></svg>
+
+        <span id="like-count">0</span>
+      </button>
+
+      <button id="dislike-btn">
+       <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="26" width="26" xmlns="http://www.w3.org/2000/svg"><path d="M314 64H142c-15.7 0-28.6 9.6-34.2 23.4L50.6 222.8c-1.7 4.4-2.6 9-2.6 14v38.6c0 21.1 17 44.6 37.8 44.6h119.3l-18 81.5-.6 6c0 7.9 3.2 15.1 8.3 20.3l20 20.1L341 320.7c6.8-6.9 11-16.5 11-27.1v-192c0-21.1-17.2-37.6-38-37.6zM400 64h64v224h-64z"></path></svg>
+
+        <span id="dislike-count">0</span>
+      </button>
+    </div>
+  </div>
+ <section id="vote">
+    <h2>Do you like this game?</h2>
+    <div class="vote-buttons">
+      <button id="like-btn">
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="26" width="26" xmlns="http://www.w3.org/2000/svg"><path d="M198 448h172c15.7 0 28.6-9.6 34.2-23.4l57.1-135.4c1.7-4.4 2.6-9 2.6-14v-38.6c0-21.1-17-44.6-37.8-44.6H306.9l18-81.5.6-6c0-7.9-3.2-15.1-8.3-20.3L297 64 171 191.3c-6.8 6.9-11 16.5-11 27.1v192c0 21.1 17.2 37.6 38 37.6zM48 224h64v224H48z"></path></svg>
+
+        <span id="like-count">0</span>
+      </button>
+
+      <button id="dislike-btn">
+       <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="26" width="26" xmlns="http://www.w3.org/2000/svg"><path d="M314 64H142c-15.7 0-28.6 9.6-34.2 23.4L50.6 222.8c-1.7 4.4-2.6 9-2.6 14v38.6c0 21.1 17 44.6 37.8 44.6h119.3l-18 81.5-.6 6c0 7.9 3.2 15.1 8.3 20.3l20 20.1L341 320.7c6.8-6.9 11-16.5 11-27.1v-192c0-21.1-17.2-37.6-38-37.6zM400 64h64v224h-64z"></path></svg>
+
+        <span id="dislike-count">0</span>
+      </button>
+    </div>
+  </section>
+  
+  <img class="thumbnail" src="https://funzilo.com/wp-content/uploads/2025/12/magikmon-thumbnail.jpg" alt="Magikmon Game Thumbnail" loading="lazy">
+
+  <h3><span class="section-marker"></span>Table of Contents</h3>
+  <ul class="table-of-contents">
+    <li><a href="#about">About Magikmon</a></li>
+    <li><a href="#how-to-play">How to Play</a></li>
+    <li><a href="#objectives">Game Modes and Objectives</a></li>
+    <li><a href="#controls">Controls</a></li>
+    <li><a href="#features">Key Game Features</a></li>
+    <li><a href="#arena">Arena</a></li>
+    <li><a href="#strategies">Advanced Strategies</a></li>
+    <li><a href="#tips">Tips & Tricks</a></li>
+    <li><a href="#social">Social Scene</a></li>
+    <li><a href="#similar">Similar Games</a></li>
+    <li><a href="#technical">Technical Aspects</a></li>
+    <li><a href="#development">Development & Legacy</a></li>
+    <li><a href="#safety">Safety</a></li>
+    <li><a href="#download">Download</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#conclusion">Conclusion</a></li>
+  </ul>
+
+  <!-- About -->
+  <section id="about">
+    <h2>About Magikmon: A Timeless Classic</h2>
+    <p>Magikmon is a beloved monster-collecting RPG inspired by Pokémon, set in a magical world called Ogwarts. Developed by Ravalmatic, it captivates players with strategy, exploration, and enchanting gameplay.</p>
+  </section>
+
+  <!-- How to Play -->
+  <section id="how-to-play">
+    <h2>How to Play: Understanding the Core Mechanics</h2>
+    <p>Navigate the world, encounter monsters, and engage in strategic turn-based battles. Exploration and combat are the dual layers of Magikmon gameplay.</p>
+  </section>
+
+  <!-- Objectives -->
+  <section id="objectives">
+    <h2>Game Modes and Objectives Explained</h2>
+    <p>Story Mode is the main adventure. Collect monsters, complete quests, and become the greatest monster trainer in Ogwarts.</p>
+  </section>
+
+  <!-- Controls -->
+  <section id="controls">
+    <h2>Controls</h2>
+    <ul>
+      <li>Movement: Click-to-move or arrow keys/WASD</li>
+      <li>Combat: Click spells, select targets</li>
+      <li>Interaction: Talk to NPCs, collect items</li>
+    </ul>
+  </section>
+
+  <!-- Features -->
+  <section id="features">
+    <h2>Key Game Features</h2>
+    <p>Magic School Setting, Elemental Synergy System, Unique Monster Designs, and Accessibility for all players.</p>
+  </section>
+
+  <!-- Arena -->
+  <section id="arena">
+    <h2>Arena</h2>
+    <p>The arena spans all zones of Ogwarts, with unique challenges and rare monsters.</p>
+  </section>
+
+  <!-- Strategies -->
+  <section id="strategies">
+    <h2>Advanced Strategies</h2>
+    <ul>
+      <li>Perfect Team Balance</li>
+      <li>Mana & Action Management</li>
+      <li>Status Effects</li>
+      <li>Type Advantages</li>
+    </ul>
+  </section>
+
+  <!-- Tips -->
+  <section id="tips">
+    <h2>Tips & Tricks</h2>
+    <ul>
+      <li>Grind near safe areas</li>
+      <li>Talk to NPCs for hints</li>
+      <li>Focus on one Carry monster</li>
+      <li>Save rare items</li>
+      <li>Explore every corner</li>
+    </ul>
+  </section>
+
+  <!-- Similar, Social, Technical, Development, Safety, Download, FAQ, Conclusion sections -->
+  <!-- Add them similarly as above for completeness -->
+
+</div>
+
+<footer></footer>
+
+<script src="/js/include-header-footer.js"></script>
+<script src="/js/vote.js"></script>
+
+</body>
+</html>
