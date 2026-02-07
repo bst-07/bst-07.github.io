@@ -73,6 +73,16 @@ function updateRating(likes, dislikes){
   } else {
     ratingFill.style.background = '#26de81';
   }
+  if (rating == 0) {
+      // Get all elements with the class 'your-class-name'
+const elements = document.querySelectorAll('.rating-box');
+
+// Iterate over the elements and set the display property
+elements.forEach(el => {
+  el.style.display = 'none';
+});
+
+  }
 }
 
 // Listen to global votes in real-time
